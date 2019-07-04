@@ -440,9 +440,16 @@ open class SwiftyCamViewController: UIViewController {
                 }
 			case .configurationFailed:
 				// Unknown Error
-                DispatchQueue.main.async {
-                    self.cameraDelegate?.swiftyCamDidFailToConfigure(self)
-                }
+//                 DispatchQueue.main.async {
+//                     self.cameraDelegate?.swiftyCamDidFailToConfigure(self)
+//                 }
+				DispatchQueue.main.async(execute: { [unowned self] in
+				    let alertController = UIAlertController(title: "Alert", message: "Camera is not available.", preferredStyle: .alert)
+				    alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (OkClicked) in
+					self.dismiss(animated: true, completion: nil)
+				    }))
+					self.present(alertController, animated: true, completion: nil)
+				})
 			}
 		}
 	}
